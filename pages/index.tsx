@@ -1,11 +1,9 @@
-import { Button, Center, Text, VStack } from '@chakra-ui/react'
+import { Center, Text, VStack } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { MintButton } from '../component/organisms/MintButton'
 
 const Home: NextPage = () => {
-  const handleMintClick = () => {
-    alert('clicked !')
-  }
   return (
     <>
       <Head>
@@ -16,15 +14,9 @@ const Home: NextPage = () => {
 
       <Center verticalAlign="center" h="100vh">
         <VStack>
-          <Text>This is testnet NFT mint sandbox page.</Text>
-          <Text>You can receive free NFT.</Text>
-          <Button
-            colorScheme="purple"
-            _focus={{ outline: 'none' }}
-            onClick={handleMintClick}
-          >
-            Mint
-          </Button>
+          <Text>This is Rinkeby Testnet NFT mint page</Text>
+          <Text>You can receive NFT by free</Text>
+          <MintButton />
         </VStack>
       </Center>
     </>
