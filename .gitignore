@@ -38,3 +38,5 @@ yarn-error.log*
 # for contracts
 contract/node_modules
 contract/.envrc
+.envrc
+
