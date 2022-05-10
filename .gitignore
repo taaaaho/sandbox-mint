@@ -34,10 +34,13 @@ client/.vercel
 
 # typescript
 client/*.tsbuildinfo
+client/.envrc
 
 
 # for contracts
 node_modules
-client/.envrc
 .envrc
-
+cache/
+build/
+typechain-types/
+artifacts/
