@@ -1,9 +1,9 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const factory = await ethers.getContractFactory("Counter");
+  const factory = await ethers.getContractFactory("NFT");
   let contract = await factory.deploy();
-  console.log(contract.address);
+  console.log("Contract Address is ", contract.address);
 
   console.log(contract.deployTransaction.hash);
   await contract.deployed();
