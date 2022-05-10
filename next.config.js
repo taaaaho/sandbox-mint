@@ -3,4 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
+module.exports = {
+  nextConfig,
+  env: {
+    MINT_CONTRACT: process.env.MINT_CONTRACT,
+  },
+}
