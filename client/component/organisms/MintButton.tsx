@@ -5,6 +5,7 @@ import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 
 declare var window: any
 
+// eslint-disable-next-line react/display-name
 export const MintButton: React.FC = memo(() => {
   const [signer, setSigner] = useState<JsonRpcSigner>()
   const [isLoading, setIsLoading] = useState(false)
@@ -79,7 +80,7 @@ export const MintButton: React.FC = memo(() => {
       // The Contract object
       const mintContract = new ethers.Contract(mintAddress, mintAbi, signer)
       const res = await mintContract.mint(
-        'https://gateway.pinata.cloud/ipfs/QmYVAdcTgam4gNyUvKs2Ry8U2S9WGhkJYREPUCGA9upBWA'
+        'https://gateway.pinata.cloud/ipfs/QmatpzwAQ7R1kME5LnRtgd4yR8b6RLhfkNZ35ZfeJhfnJU'
       )
     } catch (error) {
       setIsLoading(false)

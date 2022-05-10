@@ -1,0 +1,19 @@
+{
+  "name": "Random Pic",
+  "description": "Sandbox World",
+  "image": "https://source.unsplash.com/random/350x350",
+  "attributes": [
+    {
+      "trait_type": "Base",
+      "value": "Normal"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Normal"
+    },
+    {
+      "trait_type": "Mouth",
+      "value": "Superfly"
+    }
+  ]
+}
