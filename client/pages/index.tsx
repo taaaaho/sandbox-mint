@@ -1,6 +1,7 @@
 import { Box, Center, Text, VStack } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { Metamask } from '../component/organisms/Metamask'
 import { MintButton } from '../component/organisms/MintButton'
 
 const Home: NextPage = () => {
@@ -24,12 +25,7 @@ const Home: NextPage = () => {
             w="100vw"
             justifyContent="center"
           >
-            <Text color="white" fontWeight="semibold">
-              This is Rinkeby Testnet NFT mint page
-            </Text>
-            <Text color="white" fontWeight="semibold">
-              You can receive NFT by free
-            </Text>
+            <Metamask />
             <MintButton />
           </VStack>
         </Center>
