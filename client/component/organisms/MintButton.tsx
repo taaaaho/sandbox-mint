@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Box, Button, Text, useToast, VStack } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
-import artifact from '../../../artifacts/contracts/mint.sol/NFT.json'
+import artifact from '../../artifacts/NFT.json'
 
 declare var window: any
 
