@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, useToast } from '@chakra-ui/react'
+import { Box, Button, Text, useToast, VStack } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import artifact from '../../../artifacts/contracts/mint.sol/NFT.json'
@@ -9,6 +9,7 @@ declare var window: any
 // eslint-disable-next-line react/display-name
 export const MintButton: React.FC = memo(() => {
   const [signer, setSigner] = useState<JsonRpcSigner>()
+  const [account, setAccount] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const toast = useToast()
 
@@ -19,7 +20,8 @@ export const MintButton: React.FC = memo(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
 
     // MetaMask requires requesting permission to connect users accounts
-    await provider.send('eth_requestAccounts', [])
+    const accounts = await provider.send('eth_requestAccounts', [])
+    setAccount(accounts[0])
 
     const signer = provider.getSigner()
     setSigner(signer)
@@ -74,14 +76,21 @@ export const MintButton: React.FC = memo(() => {
     }
   }
   return (
-    <Button
-      colorScheme="purple"
-      _focus={{ outline: 'none' }}
-      onClick={handleMintClick}
-      isLoading={isLoading}
-      disabled={isLoading}
-    >
-      Mint
-    </Button>
+    <VStack>
+      {account && (
+        <Text color="white" fontWeight="semibold">
+          {account}
+        </Text>
+      )}
+      <Button
+        colorScheme="purple"
+        _focus={{ outline: 'none' }}
+        onClick={handleMintClick}
+        isLoading={isLoading}
+        disabled={isLoading}
+      >
+        Mint
+      </Button>
+    </VStack>
   )
 })
