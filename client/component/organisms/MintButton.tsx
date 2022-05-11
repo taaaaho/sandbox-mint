@@ -1,13 +1,15 @@
-import { memo, useEffect, useMemo, useState } from 'react'
-import { Button, useToast } from '@chakra-ui/react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { Box, Button, Text, useToast, VStack } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
+import artifact from '../../artifacts/NFT.json'
 
 declare var window: any
 
 // eslint-disable-next-line react/display-name
 export const MintButton: React.FC = memo(() => {
   const [signer, setSigner] = useState<JsonRpcSigner>()
+  const [account, setAccount] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const toast = useToast()
 
@@ -16,21 +18,16 @@ export const MintButton: React.FC = memo(() => {
   }
   const initialize = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-    // setProvider(provider)
 
     // MetaMask requires requesting permission to connect users accounts
-    await provider.send('eth_requestAccounts', [])
+    const accounts = await provider.send('eth_requestAccounts', [])
+    setAccount(accounts[0])
 
     const signer = provider.getSigner()
     setSigner(signer)
 
     const mintAddress = process.env.MINT_CONTRACT as string
-    console.log('mintAddress', mintAddress)
-    const mintAbi = [
-      'function mint(string memory tokenURI) public returns (uint256)',
-      'event Minted(address indexed _from)',
-    ]
-    const mintContract = new ethers.Contract(mintAddress, mintAbi, provider)
+    const contract = new ethers.Contract(mintAddress, artifact.abi, provider)
 
     // for network change event
     provider.on('network', (newNetwork, oldNetwork) => {
@@ -41,11 +38,10 @@ export const MintButton: React.FC = memo(() => {
     })
 
     // for Minted event
-    const filters = mintContract.filters['Minted']
+    const filters = contract.filters['Minted']
     if (filters !== undefined) {
-      console.log('filters', filters)
       provider.once('block', () => {
-        mintContract.on(filters(), (author: string) => {
+        contract.on(filters(), (author: string) => {
           toast({
             title: 'Mint succeed',
             description: 'Check your NFT',
@@ -67,19 +63,12 @@ export const MintButton: React.FC = memo(() => {
     setIsLoading(true)
 
     try {
-      // Mint Contract Address
-      // const mintAddress = '0x69f676aFb6dB39354bEED3F41A1024AE9ed92Bc6'
-
       // With Event emit
       const mintAddress = process.env.MINT_CONTRACT as string
 
-      const mintAbi = [
-        'function mint(string memory tokenURI) public returns (uint256)',
-      ]
-
       // The Contract object
-      const mintContract = new ethers.Contract(mintAddress, mintAbi, signer)
-      const res = await mintContract.mint(
+      const contract = new ethers.Contract(mintAddress, artifact.abi, signer)
+      const res = await contract.mint(
         'https://gateway.pinata.cloud/ipfs/QmatpzwAQ7R1kME5LnRtgd4yR8b6RLhfkNZ35ZfeJhfnJU'
       )
     } catch (error) {
@@ -87,14 +76,21 @@ export const MintButton: React.FC = memo(() => {
     }
   }
   return (
-    <Button
-      colorScheme="purple"
-      _focus={{ outline: 'none' }}
-      onClick={handleMintClick}
-      isLoading={isLoading}
-      disabled={isLoading}
-    >
-      Mint
-    </Button>
+    <VStack>
+      {account && (
+        <Text color="white" fontWeight="semibold">
+          {account}
+        </Text>
+      )}
+      <Button
+        colorScheme="purple"
+        _focus={{ outline: 'none' }}
+        onClick={handleMintClick}
+        isLoading={isLoading}
+        disabled={isLoading}
+      >
+        Mint
+      </Button>
+    </VStack>
   )
 })
