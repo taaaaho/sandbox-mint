@@ -4,7 +4,8 @@
     "build": "hardhat compile",
     "test": "hardhat test",
     "dev": "hardhat node",
-    "deploy:rinkeby": "hardhat run scripts/deploy.ts --network rinkeby"
+    "deploy:rinkeby": "hardhat run scripts/deploy.ts --network rinkeby",
+    "verify:rinkeby": "hardhat verify --network rinkeby 0x8434A538Fd34Bd17cC309b1C8Fb5d8D027d7bA3A"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",

@@ -9,7 +9,7 @@ declare var window: any
 // eslint-disable-next-line react/display-name
 export const MintButton: React.FC = memo(() => {
   const [signer, setSigner] = useState<JsonRpcSigner>()
-  const [account, setAccount] = useState(null)
+  // const [account, setAccount] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const toast = useToast()
 
@@ -21,7 +21,7 @@ export const MintButton: React.FC = memo(() => {
 
     // MetaMask requires requesting permission to connect users accounts
     const accounts = await provider.send('eth_requestAccounts', [])
-    setAccount(accounts[0])
+    // setAccount(accounts[0])
 
     const signer = provider.getSigner()
     setSigner(signer)
@@ -77,11 +77,6 @@ export const MintButton: React.FC = memo(() => {
   }
   return (
     <VStack>
-      {account && (
-        <Text color="white" fontWeight="semibold">
-          {account}
-        </Text>
-      )}
       <Button
         colorScheme="purple"
         _focus={{ outline: 'none' }}
